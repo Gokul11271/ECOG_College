@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-inst-light-bg text-inst-dark-gray font-sans antialiased;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-inst-primary;
+    font-family: 'Oswald', sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-inst-primary text-white px-8 py-3 rounded-sm hover:bg-inst-navy transition-all duration-500 font-medium uppercase tracking-[0.15em] text-xs;
+  }
+
+  .btn-secondary {
+    @apply bg-inst-blue text-white px-8 py-3 rounded-sm hover:bg-opacity-90 transition-all duration-500 font-medium uppercase tracking-[0.15em] text-xs;
+  }
+
+  .btn-accent {
+    @apply bg-inst-yellow text-inst-primary px-8 py-3 rounded-sm hover:bg-inst-orange transition-all duration-500 font-bold uppercase tracking-[0.15em] text-xs shadow-lg shadow-inst-yellow/20;
+  }
+
+  .glass-nav {
+    @apply bg-white/90 backdrop-blur-md border-b border-inst-light-border sticky top-0 z-50;
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-white rounded-md border border-inst-light-border overflow-hidden;
+  }
+}
