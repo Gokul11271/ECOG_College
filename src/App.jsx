@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 
 // Placeholder Pages
 import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import Courses from './pages/Courses';
 import Admission from './pages/Admission';
 import NoticeBoard from './pages/NoticeBoard';
@@ -27,9 +29,11 @@ function App() {
                 <main className="flex-grow">
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<About />} />
                         <Route path="/courses" element={<Courses />} />
                         <Route path="/admission" element={<Admission />} />
                         <Route path="/notices" element={<NoticeBoard />} />
+                        <Route path="/contact" element={<Contact />} />
                         <Route path="/admin" element={<Dashboard />} />
                     </Routes>
                 </main>

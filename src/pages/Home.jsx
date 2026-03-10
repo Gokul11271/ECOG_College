@@ -1,9 +1,61 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Users, Trophy, Building, ChevronRight, Globe, Award, PlayCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, BookOpen, Users, Trophy, Building, ChevronRight, Globe, Award, PlayCircle, Star, Shield, Zap, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const slides = [
+        {
+            id: 1,
+            title: "Excellence in Education",
+            subtitle: "DISCOVER YOUR POTENTIAL",
+            description: "A premier institution dedicated to fostering innovation, academic rigor, and global leadership in a rapidly evolving world.",
+            image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+            icon: <Star className="text-inst-yellow" size={32} />
+        },
+        {
+            id: 2,
+            title: "Research & Innovation",
+            subtitle: "SHAPING THE FUTURE",
+            description: "Empowering students and faculty to solve complex global challenges through cutting-edge research and interdisciplinary collaboration.",
+            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1920&q=80",
+            icon: <Zap className="text-inst-orange" size={32} />
+        },
+        {
+            id: 3,
+            title: "Global Community",
+            subtitle: "CONNECTING THE WORLD",
+            description: "Join a vibrant, diverse network of scholars and alumni across 50+ countries, united by a passion for creating positive impact.",
+            image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80",
+            icon: <Globe className="text-inst-blue" size={32} />
+        },
+        {
+            id: 4,
+            title: "Student Life",
+            subtitle: "EXPERIENCE GROWTH",
+            description: "Beyond academics, we offer a rich ecosystem of clubs, sports, and cultural activities to nurture every dimension of your character.",
+            image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1920&q=80",
+            icon: <Users className="text-inst-yellow" size={32} />
+        },
+        {
+            id: 5,
+            title: "Alumni Success",
+            subtitle: "LEGACY OF LEADERS",
+            description: "Our graduates go on to lead major organizations and innovate in fields ranging from technology to the arts, world-wide.",
+            image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1920&q=80",
+            icon: <Shield className="text-inst-orange" size={32} />
+        }
+    ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 8000);
+        return () => clearInterval(timer);
+    }, []);
+
     const staggerContainer = {
         hidden: { opacity: 0 },
         show: {
@@ -34,56 +86,124 @@ const Home = () => {
             title: "Arts & Humanities",
             image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=800",
             desc: "Fostering creativity and critical thinking."
+        },
+        {
+            title: "Architecture & Design",
+            image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=800",
+            desc: "Shaping the environments of the future."
         }
     ];
 
     return (
         <div className="flex flex-col min-h-screen bg-inst-light-bg font-sans">
 
-            {/* 1. Stunning Hero Section */}
+            {/* 1. Stunning Hero Section with Slider */}
             <section className="relative h-screen flex items-center justify-center overflow-hidden bg-inst-navy">
-                {/* Background Image & Overlay */}
-                <div className="absolute inset-0 z-0">
-                    <motion.img
-                        initial={{ scale: 1 }}
-                        animate={{ scale: 1.15 }}
-                        transition={{ duration: 30, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-                        src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                        alt="University Campus"
-                        className="w-full h-full object-cover object-center"
-                    />
-                    <div className="absolute inset-0 bg-inst-navy/80 mix-blend-multiply"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-inst-primary via-inst-primary/50 to-transparent"></div>
-                </div>
-
-                {/* Hero Content */}
-                <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto mt-16">
+                <AnimatePresence mode="wait">
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        key={currentSlide}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                        className="absolute inset-0"
                     >
-                        <span className="inline-block py-1.5 px-4 rounded-sm border border-inst-yellow/30 text-inst-yellow font-medium uppercase tracking-[0.25em] text-xs md:text-xs mb-8 backdrop-blur-md bg-white/5">
-                            Discover Your Potential
-                        </span>
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-normal font-serif text-white mb-6 leading-[1.15] tracking-tight">
-                            Excellence in <br />
-                            <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-inst-yellow to-[#E8D399]">
-                                Education
-                            </span>
-                        </h1>
-                        <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
-                            A premier institution dedicated to fostering innovation, academic rigor, and global leadership in a rapidly evolving world.
-                        </p>
-                        <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center">
-                            <Link to="/admission" className="btn-accent">
-                                Apply Now
-                            </Link>
-                            <Link to="/courses" className="inline-flex items-center justify-center px-8 py-3 text-xs tracking-[0.15em] font-medium text-white border border-white/30 rounded-sm hover:bg-white hover:text-inst-primary transition-all duration-500 backdrop-blur-sm uppercase">
-                                Explore Programs
-                            </Link>
+                        {/* Background Image & Overlay */}
+                        <div className="absolute inset-0 z-0">
+                            <motion.img
+                                initial={{ scale: 1.15 }}
+                                animate={{ scale: 1 }}
+                                transition={{ duration: 10, ease: "linear" }}
+                                src={slides[currentSlide].image}
+                                alt={slides[currentSlide].title}
+                                className="w-full h-full object-cover object-center"
+                            />
+                            <div className="absolute inset-0 bg-inst-navy/80 mix-blend-multiply"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-inst-primary via-inst-primary/50 to-transparent"></div>
+                        </div>
+
+                        {/* Hero Content */}
+                        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto mt-16">
+                            <motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5, duration: 0.8 }}
+                                    className="flex justify-center mb-8"
+                                >
+                                    <div className="p-4 rounded-full bg-white/5 backdrop-blur-md border border-inst-yellow/30 flex items-center justify-center">
+                                        {slides[currentSlide].icon}
+                                    </div>
+                                </motion.div>
+                                <motion.span
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.7, duration: 0.8 }}
+                                    className="inline-block py-1.5 px-4 rounded-sm border border-inst-yellow/30 text-inst-yellow font-medium uppercase tracking-[0.25em] text-xs md:text-xs mb-8 backdrop-blur-md bg-white/5"
+                                >
+                                    {slides[currentSlide].subtitle}
+                                </motion.span>
+                                <motion.h1
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.9, duration: 1 }}
+                                    className="text-5xl md:text-7xl lg:text-8xl font-normal font-serif text-white mb-6 leading-[1.15] tracking-tight"
+                                >
+                                    {slides[currentSlide].title.split(' ').map((word, i) => (
+                                        i === 2 ? <span key={i} className="italic text-transparent bg-clip-text bg-gradient-to-r from-inst-yellow to-[#E8D399]"> <br />{word}</span> : word + ' '
+                                    ))}
+                                </motion.h1>
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 1.2, duration: 1 }}
+                                    className="mt-8 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed"
+                                >
+                                    {slides[currentSlide].description}
+                                </motion.p>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 1.5, duration: 0.5 }}
+                                    className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center"
+                                >
+                                    <Link to="/admission" className="btn-accent">
+                                        Apply Now
+                                    </Link>
+                                    <Link to="/courses" className="inline-flex items-center justify-center px-8 py-3 text-xs tracking-[0.15em] font-medium text-white border border-white/30 rounded-sm hover:bg-white hover:text-inst-primary transition-all duration-500 backdrop-blur-sm uppercase">
+                                        Explore Programs
+                                    </Link>
+                                </motion.div>
+                            </motion.div>
                         </div>
                     </motion.div>
+                </AnimatePresence>
+
+                {/* Slider Controls */}
+                <div className="absolute bottom-12 right-12 z-30 flex items-center gap-6">
+                    <button
+                        onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+                        className="p-3 border border-white/20 rounded-full hover:bg-white/10 transition-colors text-white"
+                        aria-label="Previous slide"
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+                    <button
+                        onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+                        className="p-3 border border-white/20 rounded-full hover:bg-white/10 transition-colors text-white"
+                        aria-label="Next slide"
+                    >
+                        <ChevronRight size={24} />
+                    </button>
+                    <div className="flex gap-2">
+                        {slides.map((_, i) => (
+                            <div
+                                key={i}
+                                onClick={() => setCurrentSlide(i)}
+                                className={`h-1 cursor-pointer transition-all duration-500 rounded-full ${i === currentSlide ? 'w-10 bg-inst-yellow' : 'w-2 bg-white/30'}`}
+                            />
+                        ))}
+                    </div>
                 </div>
 
                 {/* Scroll Indicator */}
@@ -197,7 +317,7 @@ const Home = () => {
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {programs.map((prog, idx) => (
                             <motion.div
                                 key={idx}

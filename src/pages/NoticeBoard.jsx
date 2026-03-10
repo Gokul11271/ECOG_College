@@ -1,10 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Bell, Download, ChevronDown, ChevronUp, Clock, Filter } from 'lucide-react';
+import { Calendar, Bell, Download, ChevronDown, ChevronUp, Clock, Filter, Megaphone, Trophy, Star, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const NoticeBoard = () => {
   const [activeTab, setActiveTab] = useState('All');
   const [expandedNotice, setExpandedNotice] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      id: 1,
+      title: "Latest Announcements",
+      subtitle: "STAY INFORMED",
+      description: "Get the most up-to-date information regarding campus life, policy changes, and important administrative updates.",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1920",
+      icon: <Bell className="text-inst-yellow" size={32} />
+    },
+    {
+      id: 2,
+      title: "Upcoming Events",
+      subtitle: "MARK YOUR CALENDAR",
+      description: "From tech symposiums to cultural fests, discover the vibrant events happening at Ecog College this semester.",
+      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1920",
+      icon: <Megaphone className="text-inst-orange" size={32} />
+    },
+    {
+      id: 3,
+      title: "Academic Deadlines",
+      subtitle: "IMPORTANT DATES",
+      description: "Stay on top of your studies with clear information on registration deadlines, exam schedules, and term breaks.",
+      image: "https://images.unsplash.com/photo-1506784919141-9350df3624bc?auto=format&fit=crop&q=80&w=1920",
+      icon: <Calendar className="text-inst-blue" size={32} />
+    },
+    {
+      id: 4,
+      title: "Student Achievements",
+      subtitle: "CELEBRATING SUCCESS",
+      description: "We take pride in the accomplishments of our students. Explore recent awards, research breakthroughs, and sports victories.",
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1920",
+      icon: <Trophy className="text-inst-yellow" size={32} />
+    },
+    {
+      id: 5,
+      title: "Campus Updates",
+      subtitle: "INFRASTRUCTURE & BEYOND",
+      description: "Learn about the latest improvements to our facilities, library resources, and digital learning environment.",
+      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=1920",
+      icon: <Shield className="text-inst-orange" size={32} />
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, []);
 
   const tabs = ['All', 'Academic', 'Admissions', 'Events', 'General'];
 
@@ -63,26 +114,87 @@ const NoticeBoard = () => {
     : notices.filter(n => n.category === activeTab);
 
   const toggleNotice = (id) => {
-    if (expandedNotice === id) {
-      setExpandedNotice(null);
-    } else {
-      setExpandedNotice(id);
-    }
+    setExpandedNotice(expandedNotice === id ? null : id);
   };
 
   return (
     <div className="bg-inst-light-bg min-h-screen pt-24 pb-20">
 
-      {/* Header */}
-      <div className="bg-inst-navy text-white py-24 mb-16 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-inst-primary/40 to-transparent"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-normal font-serif mb-6">Notice Board</h1>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg font-light leading-relaxed">
-            Stay updated with the latest announcements, academic schedules, events, and important news from Ecog College.
-          </p>
+      {/* Header / Slider */}
+      <section className="relative h-[60vh] overflow-hidden bg-inst-navy mb-16">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 z-0">
+              <motion.img
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 10 }}
+                src={slides[currentSlide].image}
+                alt={slides[currentSlide].title}
+                className="w-full h-full object-cover opacity-50"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-inst-navy via-inst-navy/40 to-transparent"></div>
+            </div>
+
+            <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center text-center">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+                className="mb-6 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20"
+              >
+                {slides[currentSlide].icon}
+              </motion.div>
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-inst-yellow font-medium uppercase tracking-[0.4em] text-xs mb-4"
+              >
+                {slides[currentSlide].subtitle}
+              </motion.span>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="text-4xl md:text-6xl font-normal font-serif text-white mb-6"
+              >
+                {slides[currentSlide].title}
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9 }}
+                className="text-lg text-gray-300 font-light max-w-2xl leading-relaxed"
+              >
+                {slides[currentSlide].description}
+              </motion.p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Slider Navigation */}
+        <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
+          <button onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)} className="p-2 border border-white/20 rounded-full hover:bg-white/10 text-white transition-colors">
+            <ChevronLeft size={20} />
+          </button>
+          <button onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)} className="p-2 border border-white/20 rounded-full hover:bg-white/10 text-white transition-colors">
+            <ChevronRight size={20} />
+          </button>
+          <div className="flex gap-2 ml-2">
+            {slides.map((_, i) => (
+              <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i === currentSlide ? 'w-8 bg-inst-yellow' : 'w-2 bg-white/30'}`} />
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -120,16 +232,11 @@ const NoticeBoard = () => {
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     className={`transition-colors duration-300 ${expandedNotice === notice.id ? 'bg-blue-50/30' : 'hover:bg-gray-50'} `}
                   >
-                    {/* Notice Header (Clickable) */}
-                    <div
-                      className="p-6 cursor-pointer flex items-start gap-4"
-                      onClick={() => toggleNotice(notice.id)}
-                    >
+                    <div className="p-6 cursor-pointer flex items-start gap-4" onClick={() => toggleNotice(notice.id)}>
                       <div className="hidden sm:flex flex-col items-center justify-center bg-inst-light-bg rounded-md border border-gray-200 p-3 min-w-[80px]">
                         <span className="text-xs text-inst-med-gray font-bold uppercase">{notice.date.split(' ')[0].substring(0, 3)}</span>
                         <span className="text-2xl font-bold font-serif text-inst-primary leading-none my-1">{notice.date.split(' ')[1].replace(',', '')}</span>
                       </div>
-
                       <div className="flex-grow">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
                           <span className={`text-[10px] font-medium uppercase tracking-[0.15em] px-3 py-1 rounded-sm border
@@ -147,22 +254,18 @@ const NoticeBoard = () => {
                             </span>
                           )}
                         </div>
-
                         <h3 className={`text-lg md:text-xl font-normal font-serif mb-2 pr-8 transition-colors duration-300 ${expandedNotice === notice.id ? 'text-inst-yellow' : 'text-inst-navy'} `}>
                           {notice.title}
                         </h3>
-
                         <div className="flex items-center text-xs text-inst-med-gray sm:hidden mb-2 font-light">
                           <Calendar size={14} className="mr-1" /> {notice.date}
                         </div>
                       </div>
-
-                      <div className="mt-2 text-inst-med-gray transition-transform duration-300 transform">
+                      <div className="mt-2 text-inst-med-gray flex-shrink-0">
                         {expandedNotice === notice.id ? <ChevronUp size={24} className="text-inst-yellow" /> : <ChevronDown size={24} />}
                       </div>
                     </div>
 
-                    {/* Expandable Content */}
                     <AnimatePresence>
                       {expandedNotice === notice.id && (
                         <motion.div
@@ -179,7 +282,6 @@ const NoticeBoard = () => {
                             <p className="text-inst-dark-gray mb-8 leading-relaxed font-light pl-4 border-l-[3px] border-inst-yellow bg-gray-50/50 py-2">
                               {notice.content}
                             </p>
-
                             {notice.attachment && (
                               <button className="flex items-center py-2 px-4 bg-white border border-inst-light-border rounded text-sm text-inst-primary font-bold hover:bg-inst-primary hover:text-white transition-colors duration-300 group shadow-sm">
                                 <Download size={16} className="mr-2 text-inst-blue group-hover:text-white transition-colors" />

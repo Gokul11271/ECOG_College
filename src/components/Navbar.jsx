@@ -25,11 +25,9 @@ const Navbar = () => {
             {/* Top Bar - Contact & Quick Links */}
             <div className="bg-inst-navy text-white text-xs py-2 hidden lg:block">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <div className="flex space-x-6">
-                        <span className="flex items-center"><Phone size={14} className="mr-2 text-inst-yellow" /> +1 (555) 123-4567</span>
-                        <span className="flex items-center"><Mail size={14} className="mr-2 text-inst-yellow" /> admissions@ecogcollege.edu</span>
-                        <span className="flex items-center"><MapPin size={14} className="mr-2 text-inst-yellow" /> 123 Education Blvd, City</span>
-                    </div>
+                    <span className="flex items-center"><Phone size={14} className="mr-2 text-inst-yellow" /> +91 94227 99927</span>
+                    <span className="flex items-center"><Mail size={14} className="mr-2 text-inst-yellow" /> ecogproduct@gmail.com</span>
+                    <span className="flex items-center"><MapPin size={14} className="mr-2 text-inst-yellow shrink-0" /> <span className="truncate max-w-[200px]" title="Near by Kochai Varuval, Ezhlil Nagar, Karatumedu, Saravanampatti, Coimbatore, Tamil Nadu 641107">Near by Kochai Varuval, Coimbatore</span></span>
                     <div className="flex space-x-4">
                         <Link to="/alumni" className="hover:text-inst-yellow transition-colors">Alumni</Link>
                         <span className="text-gray-500">|</span>
@@ -118,8 +116,9 @@ const Navbar = () => {
                             >
                                 Apply Online
                             </Link>
-                            <div className="flex justify-center space-x-4 text-gray-400 text-sm mt-4">
-                                <span className="flex items-center"><Phone size={14} className="mr-2" /> (555) 123-4567</span>
+                            <div className="flex flex-col items-center space-y-2 text-gray-400 text-sm mt-4">
+                                <span className="flex items-center"><Phone size={14} className="mr-2" /> +91 94227 99927</span>
+                                <span className="flex items-center"><Mail size={14} className="mr-2" /> ecogproduct@gmail.com</span>
                             </div>
                         </div>
                     </div>
